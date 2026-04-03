@@ -25,14 +25,34 @@
     }
     .panel h1 { margin: 0 0 8px; font-size: 15px; font-weight: 650; }
     .panel .sub { color: #444; margin-bottom: 10px; font-size: 12px; }
-    .panel ol.itinerary { margin: 0 0 12px; padding-left: 1.15em; }
-    .panel ol.itinerary li { margin-bottom: 7px; }
     details.legend {
-      margin: 0;
+      margin: 8px 0 0;
       padding: 0;
       border-top: 1px solid #e8e8e8;
       font-size: 11px;
       color: #333;
+    }
+    .legend-body { padding: 4px 0 2px; }
+    .legend-body ol.itinerary {
+      margin: 0 0 14px;
+      padding-left: 1.15em;
+      font-size: 13px;
+      line-height: 1.45;
+      color: #222;
+    }
+    .legend-body ol.itinerary li { margin-bottom: 7px; }
+    .map-key-label {
+      margin: 0 0 8px;
+      font-size: 11px;
+      font-weight: 650;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: #555;
+    }
+    .map-key {
+      margin-top: 4px;
+      padding-top: 12px;
+      border-top: 1px solid #e8e8e8;
     }
     .legend-summary {
       cursor: pointer;
@@ -89,7 +109,6 @@
       transform: rotate(-135deg);
       margin-top: 10px;
     }
-    .legend-body { padding: 2px 0 0; }
     .legend ul { margin: 0; padding: 0; list-style: none; }
     .legend li {
       display: flex;
@@ -130,48 +149,51 @@
   <div class="panel">
     <h1>Sweden & Norway · Jul 26 – Aug 9</h1>
     <div class="sub">Trip order on the map: east → west — Stockholm area → Oslo → Flåm → Bergen.</div>
-    <ol class="itinerary">
-      <li><strong>Jul 27–30</strong> — Archipelago · Strandvägen ↔ Sandhamn (Seglarhotell)</li>
-      <li><strong>Jul 30 – Aug 3</strong> — Stockholm · Hotel Frantz</li>
-      <li><strong>Aug 3</strong> — Overnight train · Stockholm → Oslo (Hobo)</li>
-      <li><strong>Aug 4</strong> — Bergensbanen + Flåmsbana · Oslo → Myrdal → Flåm (camping)</li>
-      <li><strong>Aug 5</strong> — Nærøyfjord cruise · bus · train · Flåm → Gudvangen → Voss → Bergen stasjon</li>
-      <li><strong>Aug 5–9</strong> — Bergen · Airbnb (near station)</li>
-    </ol>
     <details class="legend" id="legend-details">
       <summary class="legend-summary">
         <span class="legend-summary-main">
-          <span class="legend-summary-title">Map key</span>
+          <span class="legend-summary-title">Trip &amp; map legend</span>
           <span class="legend-hint">
-            <span class="when-closed">Tap or click here to open the color legend.</span>
-            <span class="when-open">Tap or click here to close.</span>
+            <span class="when-closed">Tap or click here to show the itinerary and color legend.</span>
+            <span class="when-open">Tap or click here to hide.</span>
           </span>
         </span>
       </summary>
       <div class="legend-body">
-        <ul>
-          <li>
-            <i class="pin" aria-hidden="true"></i>
-            <span><span class="lg-label">Lodging</span> · <span class="lg-detail">each overnight stay (hotels + Airbnb)</span></span>
-          </li>
-          <li>
-            <i class="swatch dash" style="border-bottom-color:#0d9488"></i>
-            <span><span class="lg-label">Archipelago ferry</span> · <span class="lg-detail">Strandvägen ↔ Sandhamn</span></span>
-          </li>
-          <li>
-            <i class="swatch" style="background:#ca8a04"></i>
-            <span><span class="lg-label">Mainline trains</span> · <span class="lg-detail">Stockholm–Oslo overnight, then Oslo–Flåm (Bergensbanen + branch to Flåm)</span></span>
-          </li>
-          <li>
-            <i class="swatch" style="background:#5b21b6"></i>
-            <span><span class="lg-label">Nærøyfjord cruise</span> · <span class="lg-detail">on the water, Flåm → Gudvangen</span></span>
-          </li>
-          <li>
-            <i class="swatch dash" style="border-bottom-color:#7c3aed"></i>
-            <span><span class="lg-label">Bus + train</span> · <span class="lg-detail">Gudvangen → Voss → Bergen stasjon</span></span>
-          </li>
-        </ul>
-        <p class="legend-note">Lines are schematic (simplified paths and station waypoints), not survey-grade tracks or fairways.</p>
+        <ol class="itinerary">
+          <li><strong>Jul 27–30</strong> — Archipelago · Strandvägen ↔ Sandhamn (Seglarhotell)</li>
+          <li><strong>Jul 30 – Aug 3</strong> — Stockholm · Hotel Frantz</li>
+          <li><strong>Aug 3</strong> — Overnight train · Stockholm → Oslo (Hobo)</li>
+          <li><strong>Aug 4</strong> — Bergensbanen + Flåmsbana · Oslo → Myrdal → Flåm (camping)</li>
+          <li><strong>Aug 5</strong> — Nærøyfjord cruise · bus · train · Flåm → Gudvangen → Voss → Bergen stasjon</li>
+          <li><strong>Aug 5–9</strong> — Bergen · Airbnb (near station)</li>
+        </ol>
+        <div class="map-key">
+          <p class="map-key-label">Map key</p>
+          <ul>
+            <li>
+              <i class="pin" aria-hidden="true"></i>
+              <span><span class="lg-label">Lodging</span> · <span class="lg-detail">each overnight stay (hotels + Airbnb)</span></span>
+            </li>
+            <li>
+              <i class="swatch dash" style="border-bottom-color:#0d9488"></i>
+              <span><span class="lg-label">Archipelago ferry</span> · <span class="lg-detail">Strandvägen ↔ Sandhamn</span></span>
+            </li>
+            <li>
+              <i class="swatch" style="background:#ca8a04"></i>
+              <span><span class="lg-label">Mainline trains</span> · <span class="lg-detail">Stockholm–Oslo overnight, then Oslo–Flåm (Bergensbanen + branch to Flåm)</span></span>
+            </li>
+            <li>
+              <i class="swatch" style="background:#5b21b6"></i>
+              <span><span class="lg-label">Nærøyfjord cruise</span> · <span class="lg-detail">on the water, Flåm → Gudvangen</span></span>
+            </li>
+            <li>
+              <i class="swatch dash" style="border-bottom-color:#7c3aed"></i>
+              <span><span class="lg-label">Bus + train</span> · <span class="lg-detail">Gudvangen → Voss → Bergen stasjon</span></span>
+            </li>
+          </ul>
+          <p class="legend-note">Lines are schematic (simplified paths and station waypoints), not survey-grade tracks or fairways.</p>
+        </div>
       </div>
     </details>
   </div>
