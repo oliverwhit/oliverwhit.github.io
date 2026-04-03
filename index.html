@@ -27,21 +27,69 @@
     .panel .sub { color: #444; margin-bottom: 10px; font-size: 12px; }
     .panel ol.itinerary { margin: 0 0 12px; padding-left: 1.15em; }
     .panel ol.itinerary li { margin-bottom: 7px; }
-    .legend {
+    details.legend {
       margin: 0;
-      padding: 10px 0 0;
+      padding: 0;
       border-top: 1px solid #e8e8e8;
       font-size: 11px;
       color: #333;
     }
-    .legend h2 {
-      margin: 0 0 8px;
+    .legend-summary {
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      min-height: 44px;
+      padding: 6px 0 2px;
+      margin: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+    }
+    .legend-summary-title {
+      display: block;
       font-size: 11px;
       font-weight: 650;
       letter-spacing: 0.02em;
       text-transform: uppercase;
       color: #555;
     }
+    .legend-hint {
+      display: block;
+      margin-top: 3px;
+      font-size: 10px;
+      font-weight: 400;
+      line-height: 1.3;
+      color: #888;
+      text-transform: none;
+      letter-spacing: normal;
+    }
+    .legend-hint .when-open { display: none; }
+    details.legend[open] .legend-hint .when-closed { display: none; }
+    details.legend[open] .legend-hint .when-open { display: inline; }
+    .legend-summary::-webkit-details-marker { display: none; }
+    .legend-summary::marker { content: none; }
+    .legend-summary-main { min-width: 0; flex: 1; }
+    .legend-summary::after {
+      content: '';
+      align-self: flex-start;
+      margin-top: 6px;
+      width: 7px;
+      height: 7px;
+      border-right: 2px solid #666;
+      border-bottom: 2px solid #666;
+      transform: rotate(45deg);
+      transition: transform 0.2s ease;
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+    details.legend[open] > .legend-summary::after {
+      transform: rotate(-135deg);
+      margin-top: 10px;
+    }
+    .legend-body { padding: 2px 0 0; }
     .legend ul { margin: 0; padding: 0; list-style: none; }
     .legend li {
       display: flex;
@@ -90,38 +138,49 @@
       <li><strong>Aug 5</strong> — Nærøyfjord cruise · bus · train · Flåm → Gudvangen → Voss → Bergen stasjon</li>
       <li><strong>Aug 5–9</strong> — Bergen · Airbnb (near station)</li>
     </ol>
-    <div class="legend">
-      <h2>Map key</h2>
-      <ul>
-        <li>
-          <i class="pin" aria-hidden="true"></i>
-          <span><span class="lg-label">Lodging</span> · <span class="lg-detail">each overnight stay (hotels + Airbnb)</span></span>
-        </li>
-        <li>
-          <i class="swatch dash" style="border-bottom-color:#0d9488"></i>
-          <span><span class="lg-label">Archipelago ferry</span> · <span class="lg-detail">Strandvägen ↔ Sandhamn</span></span>
-        </li>
-        <li>
-          <i class="swatch" style="background:#ca8a04"></i>
-          <span><span class="lg-label">Mainline trains</span> · <span class="lg-detail">Stockholm–Oslo overnight, then Oslo–Flåm (Bergensbanen + branch to Flåm)</span></span>
-        </li>
-        <li>
-          <i class="swatch" style="background:#5b21b6"></i>
-          <span><span class="lg-label">Nærøyfjord cruise</span> · <span class="lg-detail">on the water, Flåm → Gudvangen</span></span>
-        </li>
-        <li>
-          <i class="swatch dash" style="border-bottom-color:#7c3aed"></i>
-          <span><span class="lg-label">Bus + train</span> · <span class="lg-detail">Gudvangen → Voss → Bergen stasjon</span></span>
-        </li>
-      </ul>
-      <p class="legend-note">Lines are schematic (simplified paths and station waypoints), not survey-grade tracks or fairways.</p>
-    </div>
+    <details class="legend" id="legend-details">
+      <summary class="legend-summary">
+        <span class="legend-summary-main">
+          <span class="legend-summary-title">Map key</span>
+          <span class="legend-hint">
+            <span class="when-closed">Tap or click here to open the color legend.</span>
+            <span class="when-open">Tap or click here to close.</span>
+          </span>
+        </span>
+      </summary>
+      <div class="legend-body">
+        <ul>
+          <li>
+            <i class="pin" aria-hidden="true"></i>
+            <span><span class="lg-label">Lodging</span> · <span class="lg-detail">each overnight stay (hotels + Airbnb)</span></span>
+          </li>
+          <li>
+            <i class="swatch dash" style="border-bottom-color:#0d9488"></i>
+            <span><span class="lg-label">Archipelago ferry</span> · <span class="lg-detail">Strandvägen ↔ Sandhamn</span></span>
+          </li>
+          <li>
+            <i class="swatch" style="background:#ca8a04"></i>
+            <span><span class="lg-label">Mainline trains</span> · <span class="lg-detail">Stockholm–Oslo overnight, then Oslo–Flåm (Bergensbanen + branch to Flåm)</span></span>
+          </li>
+          <li>
+            <i class="swatch" style="background:#5b21b6"></i>
+            <span><span class="lg-label">Nærøyfjord cruise</span> · <span class="lg-detail">on the water, Flåm → Gudvangen</span></span>
+          </li>
+          <li>
+            <i class="swatch dash" style="border-bottom-color:#7c3aed"></i>
+            <span><span class="lg-label">Bus + train</span> · <span class="lg-detail">Gudvangen → Voss → Bergen stasjon</span></span>
+          </li>
+        </ul>
+        <p class="legend-note">Lines are schematic (simplified paths and station waypoints), not survey-grade tracks or fairways.</p>
+      </div>
+    </details>
   </div>
   <div id="map"></div>
   <script>
     // Route + stay pins (stays geocoded via OpenStreetMap / published coords)
     const places = {
       strandvagen: [59.3328, 18.0775],
+      sandhamnFerryTerminal: [59.2884847, 18.9155178],
       sandhamnSeglarhotell: [59.28963, 18.91359],
       frantz: [59.3194328, 18.0714214],
       stockholmC: [59.3298746, 18.0575007],
@@ -202,11 +261,13 @@
       [59.4003174, 18.6446734],
       [59.3087239, 18.8675978],
       [59.2913293, 18.9162845],
-      places.sandhamnSeglarhotell,
+      places.sandhamnFerryTerminal,
     ];
     L.polyline(ferryStockholmSandhamn, { color: '#0d9488', weight: 4, opacity: 0.9, dashArray: '8 6' }).addTo(layers.ferry);
     L.circleMarker(places.strandvagen, { radius: 6, color: '#0f766e', fillColor: '#14b8a6', fillOpacity: 0.9, weight: 2 }).addTo(layers.ferry)
       .bindPopup('Strandvägen 14 (ferry pier)');
+    L.circleMarker(places.sandhamnFerryTerminal, { radius: 6, color: '#0f766e', fillColor: '#5eead4', fillOpacity: 0.95, weight: 2 }).addTo(layers.ferry)
+      .bindPopup('Sandhamn ferry terminal');
 
     // Stockholm Central (overnight train to Oslo)
     L.circleMarker(places.stockholmC, { radius: 6, color: '#ca8a04', fillColor: '#eab308', fillOpacity: 0.95, weight: 2 }).addTo(layers.train)
@@ -278,7 +339,7 @@
     Object.values(layers).forEach((g) => g.addTo(map));
 
     const allPoints = [
-      places.strandvagen, places.sandhamnSeglarhotell,
+      places.strandvagen, places.sandhamnFerryTerminal, places.sandhamnSeglarhotell,
       places.frantz, places.stockholmC, places.osloS, places.hobo, places.myrdal, places.flamCamping,
       places.gudvangen, places.voss, places.bergenStation, places.bergenAirbnb,
     ];
