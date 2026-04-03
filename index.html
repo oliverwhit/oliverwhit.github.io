@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sweden & Norway — July 26 – Aug 9</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+    #map { height: 100vh; width: 100%; }
+    .panel {
+      position: absolute;
+      z-index: 1000;
+      top: 12px;
+      left: 12px;
+      max-width: min(380px, calc(100vw - 24px));
+      background: rgba(255, 255, 255, 0.96);
+      padding: 14px 16px;
+      border-radius: 10px;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.12);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .panel h1 { margin: 0 0 8px; font-size: 15px; font-weight: 650; }
+    .panel .sub { color: #444; margin-bottom: 10px; font-size: 12px; }
+    .panel ol { margin: 0; padding-left: 1.2em; }
+    .panel li { margin-bottom: 6px; }
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #e8e8e8;
+      font-size: 11px;
+    }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; }
+    .swatch { width: 18px; height: 4px; border-radius: 2px; }
+    .legend .pin {
+      width: 11px;
+      height: 16px;
+      background: url('https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png') center/contain no-repeat;
+    }
+  </style>
+</head>
+<body>
+  <div class="panel">
+    <h1>2-week route: U.S. → Sweden → Norway</h1>
+    <div class="sub">Jul 26 – Aug 9 · Order follows the numbered path on the map.<br /><span style="color:#666;font-size:11px;">Orange rail lines use station waypoints along the main lines (not a GPS survey of the tracks).</span></div>
+    <ol>
+      <li><strong>Ferry</strong> — Strandvägen → Sandhamn → back (Jul 27–30)</li>
+      <li><strong>Stockholm</strong> — Hotel Frantz (Jul 30 – Aug 3)</li>
+      <li><strong>Train</strong> — Stockholm → Oslo overnight (Aug 3)</li>
+      <li><strong>Rail</strong> — Oslo → Myrdal → Flåm (Aug 4)</li>
+      <li><strong>Fjord + bus + train</strong> — Flåm → Gudvangen → Voss → Bergen (Aug 5)</li>
+      <li><strong>Bergen</strong> — Airbnb (Aug 5–9)</li>
+    </ol>
+    <div class="legend">
+      <span><i class="pin" aria-hidden="true"></i> Overnight stays (5)</span>
+      <span><i class="swatch" style="background:#0d9488"></i> Ferry</span>
+      <span><i class="swatch" style="background:#ca8a04"></i> Train / rail</span>
+      <span><i class="swatch" style="background:#5b21b6"></i> Nærøyfjord cruise (Flåm–Gudvangen)</span>
+      <span><i class="swatch" style="background:#7c3aed"></i> Bus + rail (Gudvangen–Bergen)</span>
+    </div>
+  </div>
+  <div id="map"></div>
+  <script>
+    // Route + stay pins (stays geocoded via OpenStreetMap / published coords)
+    const places = {
+      strandvagen: [59.3328, 18.0775],
+      sandhamnSeglarhotell: [59.28963, 18.91359],
+      frantz: [59.3194328, 18.0714214],
+      stockholmC: [59.3298746, 18.0575007],
+      osloS: [59.9110251, 10.7531379],
+      hobo: [59.9112840, 10.7469490],
+      myrdal: [60.7351714, 7.1228288],
+      flamStation: [60.8629525, 7.1131783],
+      flamCamping: [60.8629960, 7.1097870],
+      gudvangen: [60.8791085, 6.8396298],
+      voss: [60.6294, 6.4298],
+      bergenAirbnb: [60.38685, 5.32676],
+    };
+
+    const stays = [
+      {
+        pos: places.sandhamnSeglarhotell,
+        title: 'Sandhamn Seglarhotell',
+        body: 'Box 124<br>130 39 Sandhamn, Sweden',
+      },
+      {
+        pos: places.frantz,
+        title: 'Hotel Frantz',
+        body: 'Peter Myndes Backe 5<br>118 46 Stockholm, Sweden',
+      },
+      {
+        pos: places.hobo,
+        title: 'Hobo Oslo',
+        body: 'Dronningens gate 23–25<br>0154 Oslo, Norway',
+      },
+      {
+        pos: places.flamCamping,
+        title: 'Flåm Camping og Vandrarheim',
+        body: 'Nedre Brekkevegen 12<br>5743 Flåm, Norway',
+      },
+      {
+        pos: places.bergenAirbnb,
+        title: 'Bergen · Airbnb',
+        body: 'Fredrik Meltzers gate 5, Bergenhus<br>5007 Vestland, Norway',
+      },
+    ];
+
+    const map = L.map('map').setView([58, 8], 4);
+
+    // Default marker images (file:// / local HTML needs absolute URLs)
+    delete L.Icon.Default.prototype._getIconUrl;
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+      iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+      shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+    });
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+      maxZoom: 19,
+    }).addTo(map);
+
+    const layers = {
+      stays: L.layerGroup(),
+      ferry: L.layerGroup(),
+      train: L.layerGroup(),
+      fjord: L.layerGroup(),
+    };
+
+    stays.forEach((s) => {
+      L.marker(s.pos)
+        .addTo(layers.stays)
+        .bindPopup(`<strong>${s.title}</strong><br>${s.body}`);
+    });
+
+    // Ferry: Strandvägen ↔ Sandhamn — Cinderellabåtarna / Strömma archipelago stops (pier coords from OSM / Nominatim)
+    const ferryStockholmSandhamn = [
+      places.strandvagen,
+      [59.3180733, 18.1569257],
+      [59.3577905, 18.2312840],
+      [59.40406, 18.331331],
+      [59.4072687, 18.5530006],
+      [59.4003174, 18.6446734],
+      [59.3087239, 18.8675978],
+      [59.2913293, 18.9162845],
+      places.sandhamnSeglarhotell,
+    ];
+    L.polyline(ferryStockholmSandhamn, { color: '#0d9488', weight: 4, opacity: 0.9, dashArray: '8 6' }).addTo(layers.ferry);
+    L.circleMarker(places.strandvagen, { radius: 6, color: '#0f766e', fillColor: '#14b8a6', fillOpacity: 0.9, weight: 2 }).addTo(layers.ferry)
+      .bindPopup('Strandvägen 14 (ferry pier)');
+
+    // Stockholm Central (overnight train to Oslo)
+    L.circleMarker(places.stockholmC, { radius: 6, color: '#ca8a04', fillColor: '#eab308', fillOpacity: 0.95, weight: 2 }).addTo(layers.train)
+      .bindPopup('Stockholm Central → Oslo S (overnight train)');
+
+    // Stockholm → Oslo S: main line via Katrineholm, Hallsberg, Örebro, Karlstad, Arvika, Kongsvinger
+    const stockholmOslo = [
+      places.stockholmC,
+      [58.9965727, 16.2080762],
+      [59.0671196, 15.1107975],
+      [59.2780185, 15.2106713],
+      [59.3780025, 13.4990762],
+      [59.6537060, 12.5911750],
+      [60.1875079, 12.0035962],
+      places.osloS,
+    ];
+    L.polyline(stockholmOslo, { color: '#ca8a04', weight: 4, opacity: 0.88 }).addTo(layers.train);
+    L.circleMarker(places.osloS, { radius: 6, color: '#a16207', fillColor: '#eab308', fillOpacity: 0.95, weight: 2 }).addTo(layers.train)
+      .bindPopup('Oslo S (overnight train arrival)');
+
+    // Oslo S → Flåm: Bergensbanen — extra waypoints Oslo→Hønefoss (Asker, Drammen, Mjøndalen, Hokksund, Vikersund), then Geilo, Finse, Myrdal + Flåmsbana
+    const osloFlam = [
+      places.osloS,
+      [59.8334885, 10.4344797],
+      [59.7403775, 10.2031477],
+      [59.7508637, 10.0108436],
+      [59.7671635, 9.9110273],
+      [59.9691490, 9.9982696],
+      [60.1692786, 10.2490896],
+      [60.5345261, 8.2063719],
+      [60.6016782, 7.5041467],
+      places.myrdal,
+      places.flamStation,
+    ];
+    L.polyline(osloFlam, { color: '#ca8a04', weight: 4, opacity: 0.88 }).addTo(layers.train);
+    L.circleMarker(places.myrdal, { radius: 5, color: '#a16207', fillColor: '#fde047', fillOpacity: 0.95, weight: 2 }).addTo(layers.train)
+      .bindPopup('Myrdal (Bergen line)');
+
+    // UNESCO Nærøyfjord cruise: Flåm → Aurlandsfjord → Nærøyfjord → Gudvangen (waypoints in the fjord, not over land)
+    const fjordCruiseFlamGudvangen = [
+      places.flamStation,
+      [60.905, 7.108],
+      [60.9509121, 7.1047399],
+      [60.9594407, 6.9322107],
+      [60.9163, 6.8689],
+      [60.892, 6.852],
+      places.gudvangen,
+    ];
+    L.polyline(fjordCruiseFlamGudvangen, { color: '#5b21b6', weight: 4, opacity: 0.95 }).addTo(layers.fjord);
+
+    // Gudvangen → Voss → Bergen: bus + rail (schematic corridor)
+    const gudvangenToBergen = [
+      places.gudvangen,
+      [60.75, 6.55],
+      places.voss,
+      [60.45, 5.85],
+      places.bergenAirbnb,
+    ];
+    L.polyline(gudvangenToBergen, { color: '#7c3aed', weight: 4, opacity: 0.88, dashArray: '6 8' }).addTo(layers.fjord);
+
+    [
+      [places.gudvangen, 'Gudvangen · UNESCO Nærøyfjord cruise (arrival)'],
+      [places.voss, 'Voss (bus)'],
+    ].forEach(([p, label]) => {
+      L.circleMarker(p, { radius: 6, color: '#5b21b6', fillColor: '#a78bfa', fillOpacity: 0.95, weight: 2 }).addTo(layers.fjord).bindPopup(label);
+    });
+
+    Object.values(layers).forEach((g) => g.addTo(map));
+
+    const allPoints = [
+      places.strandvagen, places.sandhamnSeglarhotell,
+      places.frantz, places.stockholmC, places.osloS, places.hobo, places.myrdal, places.flamCamping,
+      places.gudvangen, places.voss, places.bergenAirbnb,
+    ];
+    map.fitBounds(L.latLngBounds(allPoints), { padding: [48, 48], maxZoom: 8 });
+  </script>
+</body>
+</html>
