@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>40th birthday ski week — Europe shortlist</title>
+    <style>
+      :root {
+        --bg: #0b0b0c;
+        --surface: #141417;
+        --surface-2: #1a1a1e;
+        --stroke: #25252b;
+        --stroke-2: #2f2f36;
+        --text: #ececee;
+        --text-secondary: #a4a4ad;
+        --text-tertiary: #75757d;
+        --text-quaternary: #4f4f56;
+        --accent: #4a9eff;
+        --success: #5fb878;
+        --success-bg: rgba(95, 184, 120, 0.1);
+        --success-border: rgba(95, 184, 120, 0.35);
+        --warning: #e8b75c;
+        --warning-bg: rgba(232, 183, 92, 0.1);
+        --warning-border: rgba(232, 183, 92, 0.35);
+        --danger: #e86c5c;
+        --danger-bg: rgba(232, 108, 92, 0.1);
+        --danger-border: rgba(232, 108, 92, 0.35);
+        --info: #5e9cd6;
+        --info-bg: rgba(94, 156, 214, 0.1);
+        --info-border: rgba(94, 156, 214, 0.35);
+        --neutral-bg: rgba(255, 255, 255, 0.04);
+        --radius: 8px;
+        --radius-sm: 6px;
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --bg: #fafafa;
+          --surface: #ffffff;
+          --surface-2: #f4f4f5;
+          --stroke: #e4e4e7;
+          --stroke-2: #d4d4d8;
+          --text: #18181b;
+          --text-secondary: #52525b;
+          --text-tertiary: #71717a;
+          --text-quaternary: #a1a1aa;
+          --accent: #0066cc;
+          --success: #16803c;
+          --success-bg: rgba(22, 128, 60, 0.08);
+          --success-border: rgba(22, 128, 60, 0.3);
+          --warning: #b45309;
+          --warning-bg: rgba(180, 83, 9, 0.08);
+          --warning-border: rgba(180, 83, 9, 0.3);
+          --danger: #b91c1c;
+          --danger-bg: rgba(185, 28, 28, 0.08);
+          --danger-border: rgba(185, 28, 28, 0.3);
+          --info: #1d4ed8;
+          --info-bg: rgba(29, 78, 216, 0.08);
+          --info-border: rgba(29, 78, 216, 0.3);
+          --neutral-bg: rgba(0, 0, 0, 0.03);
+        }
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body { margin: 0; padding: 0; }
+
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: -apple-system, BlinkMacSystemFont, "Inter", "SF Pro Text", "Segoe UI", Roboto, sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      main {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 48px 32px 96px;
+      }
+
+      .stack { display: flex; flex-direction: column; }
+      .stack-24 > * + * { margin-top: 24px; }
+      .stack-16 > * + * { margin-top: 16px; }
+      .stack-12 > * + * { margin-top: 12px; }
+      .stack-10 > * + * { margin-top: 10px; }
+      .stack-8 > * + * { margin-top: 8px; }
+      .stack-6 > * + * { margin-top: 6px; }
+
+      h1, h2, h3, p { margin: 0; }
+
+      h1 {
+        font-size: 24px;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        color: var(--text);
+      }
+
+      h2 {
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: -0.005em;
+        color: var(--text);
+      }
+
+      h3 {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text);
+      }
+
+      p { color: var(--text); }
+      .secondary { color: var(--text-secondary); }
+      .tertiary { color: var(--text-tertiary); }
+      .small { font-size: 12.5px; }
+      .semibold { font-weight: 600; }
+
+      .divider {
+        height: 1px;
+        background: var(--stroke);
+        border: 0;
+        margin: 0;
+      }
+
+      /* Grid */
+      .grid { display: grid; gap: 16px; }
+      .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+      @media (max-width: 900px) {
+        .grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-3 { grid-template-columns: 1fr; }
+        .grid-2 { grid-template-columns: 1fr; }
+      }
+
+      /* Stat */
+      .stat {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 4px 0;
+      }
+      .stat-value {
+        font-size: 28px;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--text);
+      }
+      .stat-value.success { color: var(--success); }
+      .stat-value.warning { color: var(--warning); }
+      .stat-value.danger { color: var(--danger); }
+      .stat-value.info { color: var(--info); }
+      .stat-label {
+        font-size: 12px;
+        color: var(--text-secondary);
+      }
+
+      /* Card */
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--stroke);
+        border-radius: var(--radius);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+      }
+      .card-header {
+        padding: 8px 14px;
+        border-bottom: 1px solid var(--stroke);
+        font-size: 12px;
+        font-weight: 500;
+        color: var(--text-secondary);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        min-height: 28px;
+      }
+      .card-body {
+        padding: 14px;
+        flex: 1;
+      }
+
+      /* Pill */
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        font-size: 11px;
+        line-height: 1;
+        font-weight: 500;
+        padding: 3px 8px;
+        border-radius: 999px;
+        border: 1px solid var(--stroke-2);
+        color: var(--text-secondary);
+        white-space: nowrap;
+      }
+      .pill.sm { font-size: 10.5px; padding: 2px 7px; border: 0; background: var(--neutral-bg); }
+      .pill.success { color: var(--success); border-color: var(--success-border); }
+      .pill.success.filled, .pill.success.sm { background: var(--success-bg); color: var(--success); border: 0; }
+      .pill.warning { color: var(--warning); border-color: var(--warning-border); }
+      .pill.warning.filled, .pill.warning.sm { background: var(--warning-bg); color: var(--warning); border: 0; }
+      .pill.danger { color: var(--danger); border-color: var(--danger-border); }
+      .pill.danger.filled, .pill.danger.sm { background: var(--danger-bg); color: var(--danger); border: 0; }
+      .pill.info { color: var(--info); border-color: var(--info-border); }
+      .pill.info.filled, .pill.info.sm { background: var(--info-bg); color: var(--info); border: 0; }
+
+      .pill-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+      /* Callout */
+      .callout {
+        border: 1px solid var(--stroke);
+        border-radius: var(--radius);
+        padding: 14px 16px;
+        background: var(--surface);
+      }
+      .callout-title {
+        font-size: 13px;
+        font-weight: 600;
+        margin-bottom: 6px;
+      }
+      .callout > .callout-body { color: var(--text); }
+      .callout > .callout-body > p + p { margin-top: 6px; }
+      .callout.info { border-color: var(--info-border); background: var(--info-bg); }
+      .callout.info .callout-title { color: var(--info); }
+      .callout.success { border-color: var(--success-border); background: var(--success-bg); }
+      .callout.success .callout-title { color: var(--success); }
+      .callout.warning { border-color: var(--warning-border); background: var(--warning-bg); }
+      .callout.warning .callout-title { color: var(--warning); }
+      .callout.danger { border-color: var(--danger-border); background: var(--danger-bg); }
+      .callout.danger .callout-title { color: var(--danger); }
+
+      /* Table */
+      .table-wrap {
+        border: 1px solid var(--stroke);
+        border-radius: var(--radius);
+        overflow: auto;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+      }
+      th, td {
+        padding: 10px 14px;
+        text-align: left;
+        border-bottom: 1px solid var(--stroke);
+        vertical-align: top;
+      }
+      th {
+        background: var(--surface-2);
+        font-weight: 500;
+        color: var(--text-secondary);
+        font-size: 12px;
+        text-transform: none;
+      }
+      tr:last-child td { border-bottom: 0; }
+      td.center, th.center { text-align: center; }
+      td.right, th.right { text-align: right; }
+      tr.success td { background: var(--success-bg); }
+      tr.warning td { background: var(--warning-bg); }
+      tr.danger td { background: var(--danger-bg); }
+      tr.info td { background: var(--info-bg); }
+
+      ul.bullet { margin: 0; padding: 0; list-style: none; }
+      ul.bullet li { padding-left: 0; }
+      ul.bullet li + li { margin-top: 4px; }
+
+      .header-tag {
+        font-size: 13px;
+        color: var(--text);
+        font-weight: 500;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="stack stack-24">
+      <div class="stack stack-8">
+        <h1>40th birthday ski week — Europe shortlist</h1>
+        <p class="secondary">A group of ~20, a husband turning 40, and four levers to balance: ski quality, après/party energy, price, and airport sanity. Below: an honest take on the obvious contenders, plus the resorts that consistently win this exact brief.</p>
+      </div>
+
+      <div class="callout info">
+        <div class="callout-title">TL;DR</div>
+        <div class="callout-body">
+          <p>If you want one answer: <span class="semibold">Saalbach-Hinterglemm (Austria)</span> is the most underrated fit for this brief — big ski area, ferocious slope-side après, great chalet/hotel inventory for 20, ~90 min from Salzburg, and ~30–40% cheaper than the French big names. <span class="semibold">St Anton</span> is the right pick if the group skis hard and wants the most legendary après on the continent. <span class="semibold">Méribel</span> is the right pick if you want the 3 Vallées and don't mind paying for it. <span class="semibold">If music is the deciding factor, Avoriaz during Snowboxx (14–21 March 2026)</span> is the answer — La Discothèque is on the 2026 lineup. See the DJ section below. Chamonix is the weakest of your three for this specific brief — see notes below.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-4">
+        <div class="stat"><div class="stat-value">20</div><div class="stat-label">People to coordinate</div></div>
+        <div class="stat"><div class="stat-value">4</div><div class="stat-label">Levers to balance</div></div>
+        <div class="stat"><div class="stat-value">11</div><div class="stat-label">Resorts compared</div></div>
+        <div class="stat"><div class="stat-value success">3</div><div class="stat-label">Strongest fits</div></div>
+      </div>
+
+      <hr class="divider" />
+
+      <div class="stack stack-8">
+        <h2>How the contenders score</h2>
+        <p class="secondary small">Scores are 1–5 for the brief: a mixed-ability group of ~20 wanting good skiing, a serious party week, reasonable cost, and easy airport access. "Total" is a simple sum to rank — read the columns, not the number.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Resort</th>
+              <th>Country</th>
+              <th class="center">Ski</th>
+              <th class="center">Après</th>
+              <th class="center">Value</th>
+              <th class="center">Airport</th>
+              <th class="center">Group fit</th>
+              <th class="right">Total</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="success"><td>Saalbach-Hinterglemm</td><td>Austria</td><td class="center">4</td><td class="center">5</td><td class="center">5</td><td class="center">5</td><td class="center">5</td><td class="right">24</td></tr>
+            <tr class="success"><td>Avoriaz (Portes du Soleil)</td><td>France</td><td class="center">4</td><td class="center">5</td><td class="center">4</td><td class="center">5</td><td class="center">5</td><td class="right">23</td></tr>
+            <tr class="success"><td>St Anton</td><td>Austria</td><td class="center">5</td><td class="center">5</td><td class="center">3</td><td class="center">5</td><td class="center">4</td><td class="right">22</td></tr>
+            <tr><td>Morzine (Portes du Soleil)</td><td>France</td><td class="center">4</td><td class="center">5</td><td class="center">4</td><td class="center">5</td><td class="center">4</td><td class="right">22</td></tr>
+            <tr><td>Ischgl</td><td>Austria</td><td class="center">5</td><td class="center">5</td><td class="center">3</td><td class="center">4</td><td class="center">4</td><td class="right">21</td></tr>
+            <tr><td>Mayrhofen</td><td>Austria</td><td class="center">4</td><td class="center">4</td><td class="center">4</td><td class="center">5</td><td class="center">4</td><td class="right">21</td></tr>
+            <tr class="success"><td>Selva Val Gardena (Dolomites)</td><td>Italy</td><td class="center">5</td><td class="center">4</td><td class="center">4</td><td class="center">3</td><td class="center">5</td><td class="right">21</td></tr>
+            <tr><td>Méribel (3 Vallées)</td><td>France</td><td class="center">5</td><td class="center">4</td><td class="center">2</td><td class="center">3</td><td class="center">5</td><td class="right">19</td></tr>
+            <tr><td>Val d'Isère</td><td>France</td><td class="center">5</td><td class="center">4</td><td class="center">2</td><td class="center">3</td><td class="center">4</td><td class="right">18</td></tr>
+            <tr><td>Alpe d'Huez</td><td>France</td><td class="center">4</td><td class="center">4</td><td class="center">3</td><td class="center">3</td><td class="center">4</td><td class="right">18</td></tr>
+            <tr class="warning"><td>Chamonix</td><td>France</td><td class="center">4</td><td class="center">4</td><td class="center">3</td><td class="center">5</td><td class="center">2</td><td class="right">18</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <hr class="divider" />
+
+      <h2>The three strongest fits</h2>
+
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Saalbach-Hinterglemm · Austria</span><span class="pill sm success">Best fit</span></div>
+          <div class="card-body stack stack-10">
+            <p>The "ski circus" — 270 km of linked, predominantly intermediate pistes that ski like one giant playground. Sun-facing south side is one of the best in the Alps for mid-ability cruisers.</p>
+            <p class="semibold">Why it nails this brief</p>
+            <p>Après is genuinely on the slopes — Bauer's Schi-Alm, Hinterhagalm, Goasstall — and the village is walkable late into the night. Hotel and chalet inventory for 20 is the best in the Alps because Austrian villages are built around bookable group lodging, not second homes.</p>
+            <p class="semibold">Logistics</p>
+            <p>Salzburg (SZG) ~90 min, Munich (MUC) ~2h. Eurowings/easyJet/BA all serve Salzburg cheaply. Lift pass ~€350/6 days — meaningfully cheaper than France.</p>
+            <div class="pill-row">
+              <span class="pill sm success">Walkable</span>
+              <span class="pill sm success">Group lodging</span>
+              <span class="pill sm info">Mostly intermediate</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">St Anton · Austria</span><span class="pill sm success">Top pick if you ski hard</span></div>
+          <div class="card-body stack stack-10">
+            <p>Your instinct is right. Arlberg lift connections opened up 305 km across St Anton / Lech / Zürs / Stuben — it's now the largest interconnected ski area in Austria, and the terrain is the most serious of any party resort.</p>
+            <p class="semibold">Why it nails this brief</p>
+            <p>Mooserwirt and Krazy Kanguruh are still the loudest 3pm dance floors in skiing. Innsbruck is 90 min by direct train (no minibus needed for 20). Old town is compact and walkable.</p>
+            <p class="semibold">Watch-outs</p>
+            <p>Skiing skews advanced — weaker skiers in the group will spend more time on the Galzig nursery side. Beds for 20 in one chalet are scarcer than Saalbach; expect to split across 2–3 places. Pricier than Saalbach, cheaper than France.</p>
+            <div class="pill-row">
+              <span class="pill sm success">Train from airport</span>
+              <span class="pill sm warning">Advanced bias</span>
+              <span class="pill sm info">Iconic après</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Avoriaz · France (Portes du Soleil)</span><span class="pill sm success">Best for the music</span></div>
+          <div class="card-body stack stack-10">
+            <p>Where Snowboxx happens 14–21 March 2026 — La Discothèque is on the lineup alongside Fatboy Slim, Andy C, Jayda G, Horse Meat Disco, A-Trak, Ewan McVicar, TSHA. Purpose-built, ski-in/ski-out, car-free village at 1,800m on the same 600 km Portes du Soleil lift system as Morzine.</p>
+            <p class="semibold">Why it nails this brief</p>
+            <p>The festival's outdoor main-stage arena is in the resort itself — no commute. Higher-altitude than Morzine so more snow-sure. Apartment inventory is enormous (Pierre &amp; Vacances residences alone can house 20 in adjacent units). Geneva is 90 min.</p>
+            <p class="semibold">Watch-outs</p>
+            <p>Vibe is more festival-resort than charming-village; if you want chocolate-box wood and stone, base in Morzine and lift up to Avoriaz instead. Snowboxx week prices spike — book by autumn 2025 if you want it.</p>
+            <div class="pill-row">
+              <span class="pill sm success">DJ lineup confirmed</span>
+              <span class="pill sm success">Geneva 90 min</span>
+              <span class="pill sm info">Purpose-built</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <h2>Honest take on your shortlist</h2>
+
+      <div class="stack stack-12">
+        <div class="callout success">
+          <div class="callout-title">3 Vallées — yes, specifically Méribel</div>
+          <div class="callout-body"><p>Don't book Courchevel (too quiet, too pricey, too oligarch) or Val Thorens (purpose-built, treeless, feels like a service station above the cloud line). Méribel is the right village in the 3V for a 40th — see card above.</p></div>
+        </div>
+
+        <div class="callout success">
+          <div class="callout-title">St Anton — yes, with caveats</div>
+          <div class="callout-body"><p>Closest match to "ski hard, party harder" of any resort in Europe. Only hesitate if more than ~4 of your 20 are nervous skiers; they'll feel under-served compared to Saalbach or Méribel.</p></div>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">Chamonix — the weakest fit of the three</div>
+          <div class="callout-body">
+            <p>Chamonix is incredible for a couples' trip or a serious freeride crew, but it's structurally bad for a group of 20 who want a classic ski week:</p>
+            <p>· Skiing is split across 5 separate areas (Brévent-Flégère, Grands Montets, Le Tour, Les Houches, plus the Aiguille du Midi for the Vallée Blanche) — you spend a lot of the week on buses, not lifts.</p>
+            <p>· Intermediate terrain is genuinely thin. Brévent-Flégère is the best mixed-ability area and it's small.</p>
+            <p>· Après is town-based, not slope-side — works for a small group, less so for keeping 20 people in one place at 4pm.</p>
+            <p>· Geneva at ~75 min is the one big plus.</p>
+            <p>Save Chamonix for a smaller, more advanced trip.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <h2>Other ideas worth a look</h2>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Ischgl · Austria</span><span class="pill sm info">Party-first</span></div>
+          <div class="card-body stack stack-8">
+            <p>The "Ibiza of the Alps." 239 km Silvretta Arena, ski over to Samnaun in Switzerland for duty-free lunch, and the closing concerts in late April (Elton, Muse, Robbie historically) are a genuine event. Trofana Alm and Pacha are the late nights.</p>
+            <p class="secondary small">Innsbruck 90 min, Zurich 2.5h. Pricier than Saalbach but still under French tier.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Méribel · France</span><span class="pill sm info">Premium pick · 3 Vallées</span></div>
+          <div class="card-body stack stack-8">
+            <p>The right base in the 3 Vallées for this brief — central, woodsy, much more atmospheric than Val Thorens, and skis straight onto 600 km of linked terrain. La Folie Douce Méribel and Le Rond-Point are textbook "huge group, on-mountain, sun, champagne" energy, and chalet inventory for 20 is excellent — the spiritual home of the catered chalet week.</p>
+            <p class="secondary small">Scores lower on the table only because of price (most expensive option here) and transfer (Geneva 2.5–3h with brutal Saturday Tarentaise traffic; Chambéry ~2h but fewer flights). If budget isn't really a constraint, this is the bragging-rights pick.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Morzine · Portes du Soleil</span><span class="pill sm info">Best value in France</span></div>
+          <div class="card-body stack stack-8">
+            <p>Geneva is 75 min — the easiest French transfer of any major resort. 600 km Portes du Soleil straddles France/Switzerland (Avoriaz, Champéry, Les Gets). Real Savoyard town with proper bars (Cavern, Tibetan), not a purpose-built bubble.</p>
+            <p class="secondary small">Skiing is mostly intermediate and lower-altitude — slight snow-reliability risk in a warm year. Pair with Avoriaz for the festival access without the purpose-built feel.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Alpe d'Huez · France</span><span class="pill sm info">Tomorrowland Winter</span></div>
+          <div class="card-body stack stack-8">
+            <p>Hosts Tomorrowland Winter 21–28 March 2026: Charlotte de Witte, Nina Kraviz, Steve Aoki, Lost Frequencies, Steve Angello across 7 stages including Orbyz at 2,100m. The Grand Domaine is 250 km with the Sarenne (16 km) — one of Europe's longest pistes — and famous sun-soaked south-facing skiing.</p>
+            <p class="secondary small">Grenoble (GNB) ~90 min, Lyon ~2h, Geneva ~2.5h — slightly worse airport access than Avoriaz/Morzine. Resort is purpose-built and a bit sprawling. Pick this only if Tomorrowland's techno-leaning lineup is the draw — for La Discothèque/PDM-style disco-house, Avoriaz/Snowboxx is the better match.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Mayrhofen · Austria</span><span class="pill sm warning">Snowbombing energy</span></div>
+          <div class="card-body stack stack-8">
+            <p>Innsbruck ~70 min. Zillertal valley, 142 km local + lift pass extends across the Zillertal Superskipass. Hosts Snowbombing festival in April. Great pubs (Scotland Yard, Ice Bar) and a real working town.</p>
+            <p class="secondary small">Slightly less linked skiing than Saalbach, but better train access (direct Zillertalbahn from main line).</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Val d'Isère · France</span><span class="pill sm warning">Go big or skip</span></div>
+          <div class="card-body stack stack-8">
+            <p>Espace Killy (Val d'Isère + Tignes) is 300 km, snow-sure to 3,450 m, and Cocorico / La Folie Douce on the Tignes side are top-tier. La Mangeoire and Dick's Tea Bar in town.</p>
+            <p class="secondary small">Same Geneva-3h transfer pain as Méribel, similarly expensive, slightly less polished party scene than the 3V. Pick this over Méribel only if a meaningful chunk of your group is advanced.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Selva Val Gardena · Italy</span><span class="pill sm success">Dolomites pick</span></div>
+          <div class="card-body stack stack-8">
+            <p>The strongest Dolomites fit for this brief. Selva sits directly on the Sellaronda — 500+ km of lift-linked skiing across four valleys you can ski as a circuit in a day. Luislkeller (running since 1980) is a genuinely top-tier slope-side après bar, with Saltos and La Stua adjacent. Innsbruck ~2h, Verona ~3h.</p>
+            <p class="secondary small">Italian food, jaw-dropping scenery, very walkable village. Slightly less rowdy than Austria but the Sellaronda lunches and Luislkeller after-3pm are world-class. Group lodging is good — multiple 4-star family hotels do buy-outs.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Madonna di Campiglio · Italy</span><span class="pill sm">Brenta Dolomites</span></div>
+          <div class="card-body stack stack-8">
+            <p>If you want elegance over rowdiness — beautiful Brenta-Dolomites town, 150 km of Skiarea Campiglio, fantastic mountain restaurants, lively but not unhinged. Verona (VRN) ~2.5h, Bergamo (BGY) ~3h.</p>
+            <p class="secondary small">Italian food alone makes this a serious 40th-birthday play. Less link-skiing than Selva or Austria, but the on-mountain lunches are unmatched.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <h2>Betting on a DJ — what's actually booked</h2>
+      <p class="secondary">You asked whether La Discothèque / Purple Disco Machine / Carl Cox-tier acts play these resorts in the mid-March sweet spot. Short answer: yes, surprisingly cleanly. Four ski-week festivals dominate that scene, and the lineups are confirmed enough that you can plan around them.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Festival</th>
+              <th>Resort</th>
+              <th>Dates 2026</th>
+              <th>Confirmed lineup highlights</th>
+              <th class="center">Match for your DJs</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="success">
+              <td>Snowboxx</td>
+              <td>Avoriaz (Portes du Soleil)</td>
+              <td>14–21 March</td>
+              <td>Fatboy Slim, La Discothèque, Andy C, A-Trak, Jayda G, Horse Meat Disco, Ewan McVicar, Josh Baker, Danny Howard, TSHA</td>
+              <td class="center">Direct hit</td>
+            </tr>
+            <tr>
+              <td>Tomorrowland Winter</td>
+              <td>Alpe d'Huez</td>
+              <td>21–28 March</td>
+              <td>Charlotte de Witte, Nina Kraviz, Steve Aoki, Steve Angello, Lost Frequencies, Mind Against, Agents of Time</td>
+              <td class="center">Adjacent</td>
+            </tr>
+            <tr>
+              <td>Snowbombing</td>
+              <td>Mayrhofen</td>
+              <td>Mid-April (TBC)</td>
+              <td>Carl Cox has headlined 2013 &amp; 2015; recent yrs: The Prodigy, Armand Van Helden, Skream, Benga, DJ Seinfeld, Ewan McVicar</td>
+              <td class="center">Strong gamble</td>
+            </tr>
+            <tr class="success">
+              <td>Tignes Unlimited</td>
+              <td>Tignes</td>
+              <td>25 April – 3 May</td>
+              <td>Purple Disco Machine (26 April confirmed), Stephan Bodzin, Agents of Time, Luna Semara</td>
+              <td class="center">Direct hit</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="callout success">
+          <div class="callout-title">If you want La Discothèque / Purple Disco Machine ballpark, mid-March</div>
+          <div class="callout-body"><p>Book <span class="semibold">Avoriaz for 14–21 March 2026 during Snowboxx</span>. La Discothèque is on the lineup, and the rest of the bill (Horse Meat Disco, Jayda G, Ewan McVicar, A-Trak, TSHA) is the exact disco-house-and-edges sound those acts share a circuit with. Avoriaz is on the same lift system as Morzine (Portes du Soleil, 600 km) so all the Morzine logistics in the earlier card still apply: Geneva 75 min, great value, great party town. The festival's outdoor main-stage arena is in the resort itself.</p></div>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-title">If you want Carl Cox specifically</div>
+          <div class="callout-body"><p>Carl Cox has no confirmed 2026 ski gig as of now, but Mayrhofen's <span class="semibold">Snowbombing in mid-April</span> is his historical home — he headlined 2013 and 2015 and the festival's lineup ballpark (techno/house/D&amp;B with named headliners) is the most likely place he'd land if he plays a ski week. It's a real gamble — the 2026 lineup typically drops in late autumn — but the venue is right.</p></div>
+        </div>
+
+        <div class="callout info">
+          <div class="callout-title">If you can flex to late April</div>
+          <div class="callout-body"><p><span class="semibold">Purple Disco Machine plays Tignes on 26 April 2026</span> as part of Tignes Unlimited — it's a sure thing rather than a gamble. Tignes/Val d'Isère skiing is exceptional and snow-sure that high. Tradeoff: late-season weather is variable down low, and a 40th in late April collides with school holidays (UK Easter / French Easter) so book early.</p></div>
+        </div>
+
+        <div class="callout warning">
+          <div class="callout-title">Lineup-vs-vibe honest take</div>
+          <div class="callout-body"><p>Tomorrowland Winter (Alpe d'Huez, 21–28 March) is the biggest production by a long way, but it skews techno/big-room rather than disco-house. Great choice if your group leans Charlotte de Witte / Nina Kraviz over Purple Disco Machine. Note Alpe d'Huez itself is a purpose-built resort — less chocolate-box than Méribel or Selva.</p></div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <h2>Practical notes for a group of 20</h2>
+
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Lodging</span></div>
+          <div class="card-body stack stack-8">
+            <p>Single chalets sleeping 20 do exist but are scarce and book 12+ months out for high season. Realistic options:</p>
+            <p>· <span class="semibold">Two adjacent chalets</span> — the standard play in Méribel/Val d'Isère via Bramble Ski, Ski Famille, Consensio.</p>
+            <p>· <span class="semibold">Whole boutique hotel buy-out</span> — much easier in Austria. A 12–15 room family hotel in Saalbach or Mayrhofen will quote a full-buyout rate.</p>
+            <p>· <span class="semibold">Apartment cluster</span> — purpose-built French resorts have residences with multiple 4–6 person apartments stackable for 20.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Timing</span></div>
+          <div class="card-body stack stack-8">
+            <p>Best weeks for the brief, in order:</p>
+            <p>· <span class="semibold">Mid-March</span> — long days, soft snow, full après energy, lower prices than peak. Sweet spot.</p>
+            <p>· <span class="semibold">Mid-January</span> — cheapest, coldest, shortest days, but lift queues are gone.</p>
+            <p>· <span class="semibold">Late April closing week</span> — Ischgl/St Anton/Saalbach all do closing parties. Snow is a gamble below 2,000 m.</p>
+            <p>· <span class="semibold">Avoid</span> Feb half-term (UK/FR), Christmas/NYE, Easter — 2x prices, full lifts.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Transfers</span></div>
+          <div class="card-body stack stack-8">
+            <p>For 20 people, charter a coach or two minibuses door-to-door — don't try to coordinate trains across split arrival times. Ski-Lifts and Mountain Rescue are the standard operators ex-Geneva; Four Seasons Travel ex-Salzburg/Innsbruck.</p>
+            <p class="secondary small">St Anton is the one exception — the railway station is in the village and direct trains run from Innsbruck, Zurich, and Munich. Genuinely useful if arrivals are spread across a day.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="header-tag">Budget rough cuts (per person, 7 nights)</span></div>
+          <div class="card-body stack stack-6">
+            <p>· Saalbach / Mayrhofen / Ischgl: <span class="semibold">£1,400–1,900</span> (lodging, lift, flights, transfers)</p>
+            <p>· St Anton: <span class="semibold">£1,700–2,300</span></p>
+            <p>· Morzine: <span class="semibold">£1,600–2,200</span></p>
+            <p>· Avoriaz / Alpe d'Huez: <span class="semibold">£1,800–2,500</span></p>
+            <p>· Méribel / Val d'Isère: <span class="semibold">£2,200–3,200</span></p>
+            <p class="secondary small">Mid-March, catered chalet or 3-star hotel half-board, exclusive of food/drinks beyond breakfast.</p>
+          </div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <h2>If I were booking this for you</h2>
+      <div class="callout success">
+        <div class="callout-title">Recommended path</div>
+        <div class="callout-body">
+          <p>1. <span class="semibold">If the music matters most:</span> Avoriaz, 14–21 March 2026, during Snowboxx. La Discothèque is on the lineup, the festival arena is in the resort, and Portes du Soleil is a 600 km playground. Geneva 75 min. This is the highest-confidence "see the DJs you want" option.</p>
+          <p>2. <span class="semibold">Default best-fit:</span> Saalbach-Hinterglemm, mid-March, full hotel buy-out. Lowest coordination cost, highest "everyone has a great time" probability, biggest savings to put toward the birthday dinner.</p>
+          <p>3. <span class="semibold">If the group skews advanced:</span> St Anton, mid-March, two adjacent chalets. Train from Innsbruck, no transfer headache.</p>
+          <p>4. <span class="semibold">For the elegant Italian version:</span> Selva Val Gardena, mid-March, hotel buy-out. Sellaronda skiing, Luislkeller after 3pm, the best food of any option here.</p>
+          <p>5. <span class="semibold">If budget isn't really the constraint and you want bragging rights:</span> Méribel, mid-March, two side-by-side catered chalets in the Belvédère or Morel area, La Folie Douce on day 3 for the actual birthday.</p>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
